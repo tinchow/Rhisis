@@ -5,7 +5,7 @@ using Rhisis.World.Game.Regions;
 
 namespace Rhisis.World.Game.Entities
 {
-    public interface IMonsterEntity : IEntity, IMovableEntity
+    public interface IMonsterEntity : IEntity, IMovableEntity, ILivingEntity
     {
         /// <summary>
         /// Gets or sets the parent region of the monster.

@@ -2,7 +2,9 @@
 using Rhisis.Core.IO;
 using Rhisis.Core.Network;
 using Rhisis.Core.Network.Packets;
+using Rhisis.World.Game.Entities;
 using Rhisis.World.Systems.Battle;
+using Rhisis.World.Systems.Battle.EventArgs;
 
 namespace Rhisis.World.Handlers
 {
@@ -16,12 +18,14 @@ namespace Rhisis.World.Handlers
             var unused = packet.Read<int>(); // Always 0
             var error = packet.Read<int>();
             var attackSpeed = packet.Read<float>();
+            var battleEvent = new BattleMeleeEventArgs(attackMessage, objectId, error, attackSpeed);
 
-            Logger.Debug("Player {0} attacks | {1}, {2}, {3}, {4}, {5}", 
-                client.Player.Object.Name, attackMessage, objectId, unused, error, attackSpeed);
+            var targetEntity = client.Player.FindEntity<IMonsterEntity>(objectId);
 
-            // TODO: create event args for melee attack
-            client.Player.NotifySystem<BattleSystem>(null);
+            Logger.Debug("Player {0} attacks : {6} | {1}, {2}, {3}, {4}, {5}", 
+                client.Player.Object.Name, attackMessage, objectId, unused, error, attackSpeed, targetEntity?.Object.Name);
+            
+            client.Player.NotifySystem<BattleSystem>(battleEvent);
         }
     }
 }

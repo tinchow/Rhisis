@@ -5,7 +5,7 @@ using Rhisis.World.Game.Core;
 
 namespace Rhisis.World.Game.Entities
 {
-    public interface INpcEntity : IEntity
+    public interface INpcEntity : IEntity, ILivingEntity
     {
         /// <summary>
         /// Gets or sets the npc's shop item containers.
