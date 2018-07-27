@@ -11,9 +11,9 @@ namespace Rhisis.World.Packets
 {
     public static partial class WorldPacketFactory
     {
-        public static void SendToVisible(INetPacketStream packet, IEntity player)
+        public static void SendToVisible(INetPacketStream packet, IEntity entity)
         {
-            IEnumerable<IPlayerEntity> visiblePlayers = from x in player.Object.Entities
+            IEnumerable<IPlayerEntity> visiblePlayers = from x in entity.Object.Entities
                                                         where x.Type == WorldEntityType.Player
                                                         select x as IPlayerEntity;
 
@@ -32,6 +32,18 @@ namespace Rhisis.World.Packets
                 packet.Write<byte>(1);
 
                 SendToVisible(packet, movableEntity);
+            }
+        }
+
+        public static void SendFollowTarget(IMovableEntity entity, float distance)
+        {
+            using (var packet = new FFPacket())
+            {
+                packet.StartNewMergedPacket(entity.Id, SnapshotType.MOVERSETDESTOBJ);
+                packet.Write(entity.MovableComponent.FollowedTarget.Id);
+                packet.Write(distance);
+                
+                SendToVisible(packet, entity);
             }
         }
 

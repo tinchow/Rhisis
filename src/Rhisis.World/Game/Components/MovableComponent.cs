@@ -1,18 +1,23 @@
 ﻿using Rhisis.Core.Structures;
+using Rhisis.World.Game.Core;
 
 namespace Rhisis.World.Game.Components
 {
     public class MovableComponent
     {
-        public long MoveTime { get; set; }
-
         public long LastMoveTime { get; set; }
-        
+
         public long NextMoveTime { get; set; }
 
         public Vector3 DestinationPosition { get; set; }
 
         public float Speed { get; set; }
+
+        public IEntity FollowedTarget { get; set; }
+
+        public bool IsFollowing => this.FollowedTarget != null;
+
+        public bool HasArrived { get; set; }
 
         public MovableComponent()
         {

@@ -296,11 +296,11 @@ namespace Rhisis.World
                     continue;
                 }
 
-                _maps.Add(id, map);
-                map.StartUpdateTask(100);
-
                 foreach (Type type in systemTypes)
                     map.AddSystem(Activator.CreateInstance(type, map) as ISystem);
+
+                _maps.Add(id, map);
+                map.StartUpdateTask(100);
             }
 
             Logger.Info("{0} maps loaded! \t\t", _maps.Count);

@@ -42,7 +42,7 @@ namespace Rhisis.World.Game.Core
 
         /// <inheritdoc />
         public T FindEntity<T>(int objectId) where T : IEntity
-            => (T)this.Object.Entities.FirstOrDefault(x => x.GetType() == typeof(T) && x.Id == objectId);
+            => (T)this.Object.Entities.FirstOrDefault(x => x is T && x.Id == objectId);
 
         /// <inheritdoc />
         public bool Equals(IEntity x, IEntity y) => x.Id == y.Id;

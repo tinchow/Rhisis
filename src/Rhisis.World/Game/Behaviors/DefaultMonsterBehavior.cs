@@ -15,7 +15,10 @@ namespace Rhisis.World.Game.Behaviors
         /// <inheritdoc />
         public virtual void Update(IMonsterEntity entity)
         {
-            this.UpdateMoves(entity);
+            if (entity.Battle.IsFighting)
+                this.UpdateBattleBehavior(entity);
+            else
+                this.UpdateMoves(entity);
         }
 
         /// <summary>
@@ -31,6 +34,10 @@ namespace Rhisis.World.Game.Behaviors
                 entity.Object.Angle = Vector3.AngleBetween(entity.Object.Position, entity.MovableComponent.DestinationPosition);
                 WorldPacketFactory.SendDestinationPosition(entity);
             }
+        }
+        
+        private void UpdateBattleBehavior(IMonsterEntity entity)
+        {
         }
     }
 }

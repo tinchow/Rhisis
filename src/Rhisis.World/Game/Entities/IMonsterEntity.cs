@@ -21,5 +21,10 @@ namespace Rhisis.World.Game.Entities
         /// Gets the monster's behavior.
         /// </summary>
         TimerComponent TimerComponent { get; set; }
+
+        /// <summary>
+        /// Gets the battle component.
+        /// </summary>
+        BattleComponent Battle { get; set; }
     }
 }

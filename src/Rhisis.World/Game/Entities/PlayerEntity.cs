@@ -28,6 +28,9 @@ namespace Rhisis.World.Game.Entities
         public TradeComponent Trade { get; set; }
 
         /// <inheritdoc />
+        public BattleComponent Battle { get; set; }
+
+        /// <inheritdoc />
         public NetUser Connection { get; set; }
 
         /// <summary>
@@ -37,6 +40,7 @@ namespace Rhisis.World.Game.Entities
         public PlayerEntity(IContext context)
             : base(context)
         {
+            this.Battle = new BattleComponent();
         }
     }
 }

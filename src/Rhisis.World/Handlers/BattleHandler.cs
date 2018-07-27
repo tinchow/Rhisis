@@ -1,8 +1,6 @@
 ﻿using Ether.Network.Packets;
-using Rhisis.Core.IO;
 using Rhisis.Core.Network;
 using Rhisis.Core.Network.Packets;
-using Rhisis.World.Game.Entities;
 using Rhisis.World.Systems.Battle;
 using Rhisis.World.Systems.Battle.EventArgs;
 
@@ -14,16 +12,11 @@ namespace Rhisis.World.Handlers
         public static void OnMeleeAttack(WorldClient client, INetPacketStream packet)
         {
             var attackMessage = packet.Read<int>();
-            var objectId = packet.Read<int>();
+            var targetObjectId = packet.Read<int>();
             var unused = packet.Read<int>(); // Always 0
             var error = packet.Read<int>();
             var attackSpeed = packet.Read<float>();
-            var battleEvent = new BattleMeleeEventArgs(attackMessage, objectId, error, attackSpeed);
-
-            var targetEntity = client.Player.FindEntity<IMonsterEntity>(objectId);
-
-            Logger.Debug("Player {0} attacks : {6} | {1}, {2}, {3}, {4}, {5}", 
-                client.Player.Object.Name, attackMessage, objectId, unused, error, attackSpeed, targetEntity?.Object.Name);
+            var battleEvent = new BattleMeleeEventArgs(attackMessage, targetObjectId, error, attackSpeed);
             
             client.Player.NotifySystem<BattleSystem>(battleEvent);
         }
